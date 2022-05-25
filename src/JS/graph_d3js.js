@@ -1,7 +1,7 @@
 //The graph properties
 var graphJSON, force, customColorScale;
 var width = function () {
-    return document.documentElement.clientWidth * 0.7;
+    return document.documentElement.clientWidth * 0.65;
 };
 var height = function () {
     return document.documentElement.clientHeight;
