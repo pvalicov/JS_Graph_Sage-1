@@ -1,7 +1,7 @@
 //The graph properties
 var graphJSON, force, customColorScale;
 var width = function () {
-    return document.documentElement.clientWidth*0.7;
+    return document.documentElement.clientWidth * 0.7;
 };
 var height = function () {
     return document.documentElement.clientHeight;
@@ -79,8 +79,23 @@ window.onload = function () {
     customColorScale = d3.scaleOrdinal(d3.schemePaired);
     KeyboardEventInit();
     // dragElement(document.getElementById("Overlay"));
+
+    document.addEventListener('mousemove', onMouseUpdate, false);
+    document.addEventListener('mouseenter', onMouseUpdate, false);
+}
+function onMouseUpdate(e) {
+  x = e.pageX;
+  y = e.pageY;
+  console.log(x, y);
 }
 
+function getMouseX() {
+  return x;
+}
+
+function getMouseY() {
+  return y;
+}
 // Called in webSocket.onopen, reloads page opening a new connection or opens a new page
 function PageOpenOrReload() {
     if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
@@ -95,7 +110,7 @@ function PageOpenOrReload() {
 }
 
 
-window.onresize = function() {
+window.onresize = function () {
     if (typeof graphJSON != "undefined") {
         OptimizeVertexSize();
         var resizeParameters = center_and_scale();
@@ -105,7 +120,7 @@ window.onresize = function() {
 }
 
 function UpdateLayout() {
-    if(force) force.stop();
+    if (force) force.stop();
     ManageAllGraphicsElements();
     force.restart();
 }
@@ -116,12 +131,10 @@ function OptimizeVertexSize() {
     if (w > 800 && h > 600) {
         graphJSON.vertex_size = 12;
         graphJSON.edge_thickness = 4;
-    }
-    else if (w > 500 && h > 400) {
-        graphJSON.vertex_size = w/100;
+    } else if (w > 500 && h > 400) {
+        graphJSON.vertex_size = w / 100;
         graphJSON.edge_thickness = 3;
-    }
-    else {
+    } else {
         graphJSON.vertex_size = 5;
         graphJSON.edge_thickness = 2;
     }
@@ -132,10 +145,10 @@ function InitNewGraph(graph = null) {
     if (force) force.stop();
 
 
-     // transformation des données JSON et format D3 JS
-     // on rajoute les premiers attributs SVG et réalise les calculs des placements des points
-   // on place l'interface en fonction de la taille du navigateur
-     //implementation de tout les élements graphique
+    // transformation des données JSON et format D3 JS
+    // on rajoute les premiers attributs SVG et réalise les calculs des placements des points
+    // on place l'interface en fonction de la taille du navigateur
+    //implementation de tout les élements graphique
 
     LoadGraphData(graph);
     OptimizeVertexSize();
@@ -197,7 +210,10 @@ function InitGraph() {
     force.nodes(graphJSON.nodes);
     force.force("link").links(graphJSON.links);
 
-    force.nodes().forEach((d, i) => { d.fx = graphJSON.pos[i][0]; d.fy = graphJSON.pos[i][1]; });
+    force.nodes().forEach((d, i) => {
+        d.fx = graphJSON.pos[i][0];
+        d.fy = graphJSON.pos[i][1];
+    });
 
     // Adapts the graph layout to the javascript window's dimensions
 
@@ -401,13 +417,13 @@ function InitBrush() {
     brush = svg.append("g")
         .attr("class", "brush")
         .call(d3.brush()
-        .extent( [ [0,0], [100000,100000] ] )
-        .on("start", function () {
+            .extent([[0, 0], [100000, 100000]])
+            .on("start", function () {
                 ResetSelection();
             })
-        .on("end", function () {
+            .on("end", function () {
                 var extent = d3.brushSelection(this) ||
-                [[0,0],[0,0]];
+                    [[0, 0], [0, 0]];
                 SelectElementsInsideExtent(extent);
 
                 //Remove Selection rectangle
@@ -739,7 +755,7 @@ function ManageNodes() {
         .on("dblclick", function (e, currentData) {
             SelectElement(new Element(currentData, NodeType));
         });
-    
+
     SetDrag(nodes);
 
     RefreshNodes();
@@ -775,8 +791,8 @@ function manageSelection() {
     let mouseOldPos;
 
 
-    for (let node of graphJSON.nodes){
-        if (node.isSelected){
+    for (let node of graphJSON.nodes) {
+        if (node.isSelected) {
             graphSelectedNodes.push(node);
         }
     }
@@ -791,7 +807,10 @@ function manageSelection() {
         .on('drag', function (d) {
             let mousePosX = window.event.clientX;
             let mousePosY = window.event.clientY;
-            graphSelectedNodes.forEach((node) => { node.fx += mousePosX - mousePreviousPos[0]; node.fy += mousePosY - mousePreviousPos[1];})
+            graphSelectedNodes.forEach((node) => {
+                node.fx += mousePosX - mousePreviousPos[0];
+                node.fy += mousePosY - mousePreviousPos[1];
+            })
             mousePreviousPos = [mousePosX, mousePosY];
         })
         .on('end', function (event, d) {
@@ -1429,53 +1448,67 @@ function checkIfExist() {
 //     }
 // }
 
-    function lightMode() {
-        document.querySelector("body").classList.remove("darkMode");
-        document.querySelector("body").classList.add("lightMode");
-        var all = document.getElementsByTagName("*");
-        for (var i = 0, max = all.length; i < max; i++) {
-            all[i].style.color = "black";
-        }
-        var allButton = document.getElementsByTagName("button");
-        for (var j = 0, jmax = allButton.length; j < jmax; j++) {
-            allButton[j].style.color = "white";
-            allButton[j].style.backgroundColor = "lightblue";
-        }
-        window.localStorage.setItem('themeSelect', 'lightMode');
-        getCookieTheme();
+function lightMode() {
+    document.querySelector("body").classList.remove("darkMode");
+    document.querySelector("body").classList.add("lightMode");
+    var all = document.getElementsByTagName("*");
+    for (var i = 0, max = all.length; i < max; i++) {
+        all[i].style.color = "black";
     }
-
-    function darkMode() {
-        document.querySelector("body").classList.remove("lightMode");
-        document.querySelector("body").classList.add("darkMode");
-        var all = document.getElementsByTagName("*");
-        for (var i = 0, max = all.length; i < max; i++) {
-            all[i].style.color = "white";
-        }
-        var allButton = document.getElementsByTagName("button");
-        for (var j = 0, jmax = allButton.length; j < jmax; j++) {
-            allButton[j].style.color = "grey";
-            allButton[j].style.backgroundColor = "black";
-        }
-        window.localStorage.setItem('themeSelect', 'darkMode');
-        document.querySelector('#g6').style.color = "black";
-        getCookieTheme();
+    var allButton = document.getElementsByTagName("button");
+    for (var j = 0, jmax = allButton.length; j < jmax; j++) {
+        allButton[j].style.color = "white";
+        allButton[j].style.backgroundColor = "lightblue";
     }
+    window.localStorage.setItem('themeSelect', 'lightMode');
+    getCookieTheme();
+}
 
-    function getCookieTheme() {
-        return window.localStorage.getItem('themeSelect')
+function darkMode() {
+    document.querySelector("body").classList.remove("lightMode");
+    document.querySelector("body").classList.add("darkMode");
+    var all = document.getElementsByTagName("*");
+    for (var i = 0, max = all.length; i < max; i++) {
+        all[i].style.color = "white";
     }
-
-    function selectModeDependOfCookie() {
-
-        if (getCookieTheme() === 'darkMode') {
-            darkMode();
-
-        } else if (getCookieTheme() === 'lightMode') {
-            lightMode();
-        } else {
-        }
+    var allButton = document.getElementsByTagName("button");
+    for (var j = 0, jmax = allButton.length; j < jmax; j++) {
+        allButton[j].style.color = "grey";
+        allButton[j].style.backgroundColor = "black";
     }
+    window.localStorage.setItem('themeSelect', 'darkMode');
+    document.querySelector('#g6').style.color = "black";
+    getCookieTheme();
+}
+
+function getCookieTheme() {
+    return window.localStorage.getItem('themeSelect')
+}
+
+function selectModeDependOfCookie() {
+
+    if (getCookieTheme() === 'darkMode') {
+        darkMode();
+
+    } else if (getCookieTheme() === 'lightMode') {
+        lightMode();
+    } else {
+    }
+}
+
+function checkIfMouseOver(){
+var isMouseOver =true;
+    var b= document.getElementById('svg');
+    b.onmouseover=function (){
+        isMouseOver=true;
+    }
+    b.onmouseout=function(){
+        isMouseOver=false;
+    }
+    console.log(isMouseOver);
+    return isMouseOver;
+
+}
 
 
 
