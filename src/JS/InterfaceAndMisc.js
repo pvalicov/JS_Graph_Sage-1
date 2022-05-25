@@ -341,7 +341,10 @@ function KeyboardEventInit() {
                 //A for Add
                 //alert("y="+y+ "\nx="+x);
                 //for windows and linux user for prevent him to push node when his mouse is hover the menu
-                if (x >= 256 && y>30 && y<550  ) result = [AddNewNode(), "Add new node"];
+                var screesizeH=window.screen.height;
+                var screensizeW=window.screen.width;
+                var isOnDivGraphSection = checkIfMouseOver();
+                if (x > 180 && y>30 &&  isOnDivGraphSection  && y<558) result = [AddNewNode(), "Add new node"];
                 break;
             case 67 :
                 //C for color

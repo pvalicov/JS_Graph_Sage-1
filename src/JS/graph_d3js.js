@@ -1492,5 +1492,19 @@ function selectModeDependOfCookie() {
     }
 }
 
+function checkIfMouseOver(){
+var isMouseOver =true;
+    var b= document.getElementById('svg');
+    b.onmouseover=function (){
+        isMouseOver=true;
+    }
+    b.onmouseout=function(){
+        isMouseOver=false;
+    }
+    console.log(isMouseOver);
+    return isMouseOver;
+
+}
+
 
 
