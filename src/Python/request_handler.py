@@ -59,6 +59,7 @@ def _get_graph_properties(graph):
     response[1].append(_generate_graph6_formula(graph))
     response[1].append(result)
     response[1].append(int(graph.edge_connectivity()))
+    response[1].append(graph.is_hamiltonian())
     response[1].append(int(graph.vertex_connectivity()))
     return response, graph
 
