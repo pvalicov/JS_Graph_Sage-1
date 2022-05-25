@@ -31,6 +31,8 @@ def __update_graph_nodes(gold, gnew, print_update = True):
 
 def __update_graph_positions(gold, gnew, print_update = True):
 	if gnew.get_pos() and gnew.get_pos() != gold.get_pos():
+		print("updating pos")
+		print(gnew.get_pos())
 		gold.set_pos(gnew.get_pos())
 
 def __update_graph_edges(gold, gnew, print_update = True):

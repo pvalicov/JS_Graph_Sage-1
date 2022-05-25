@@ -176,7 +176,8 @@ def CheckForUnsetPositions(targetGraph, newGraph, newGraphJSON):
     posdict = {}
     for n in newGraphJSON.nodes:
         posdict[original_nodes[n.get("name")]] = (n.get("x"),n.get("y"))
-
+    print("setting nodes pos")
+    print(posdict)
     newGraph.set_pos(posdict)
 
 import re, webbrowser, time

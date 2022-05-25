@@ -96,4 +96,38 @@ class CommandManager {
             return false;
         }
     }
+
+    ModifyPositionsOnResize(resizeParameters) {
+        for (let command of this.commandStack) {
+            this.ModifyPositions(resizeParameters, command);
+        }
+
+        for (let command of this.revertedCommandStack) {
+            this.ModifyPositions(resizeParameters, command);
+        }
+    }
+
+    ModifyPositions(param, command) {
+        if (command.value.hasOwnProperty('fx') && !graphJSON.nodes.includes(command.value)) {
+            let node = command.value;
+            console.log(node);
+            node.fx = param.scale * (node.fx - param.minx) + param.xshift;
+            node.fy = param.scale * (node.fy - param.miny) + param.yshift;
+        }
+        else if (Array.isArray(command.value) && command.value[0].hasOwnProperty('oldValue')) {
+                for (let node of command.value) {
+                    node.oldValue[0] = param.scale * (node.oldValue[0] - param.minx) + param.xshift;
+                    node.oldValue[1] = param.scale * (node.oldValue[1] - param.miny) + param.yshift;
+                    node.newValue[0] = param.scale * (node.newValue[0] - param.minx) + param.xshift;
+                    node.newValue[1] = param.scale * (node.newValue[1] - param.miny) + param.yshift;
+                }
+        }
+        else if (Array.isArray(command.value.oldValue) && command.value.element.type == NodeType) {
+                let node = command.value;
+                node.oldValue[0] = param.scale * (node.oldValue[0] - param.minx) + param.xshift;
+                node.oldValue[1] = param.scale * (node.oldValue[1] - param.miny) + param.yshift;
+                node.newValue[0] = param.scale * (node.newValue[0] - param.minx) + param.xshift;
+                node.newValue[1] = param.scale * (node.newValue[1] - param.miny) + param.yshift;
+        }
+    }
 }

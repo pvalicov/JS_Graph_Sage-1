@@ -98,7 +98,8 @@ function PageOpenOrReload() {
 window.onresize = function() {
     if (typeof graphJSON != "undefined") {
         OptimizeVertexSize();
-        center_and_scale();
+        var resizeParameters = center_and_scale();
+        MyManager.ModifyPositionsOnResize(resizeParameters);
         UpdateLayout();
     }
 }
@@ -200,7 +201,8 @@ function InitGraph() {
 
     // Adapts the graph layout to the javascript window's dimensions
 
-    center_and_scale();
+    var resizeParameters = center_and_scale();
+    MyManager.ModifyPositionsOnResize(resizeParameters);
 
     // The function 'line' takes as input a sequence of tuples, and returns a
     // curve interpolating these points.
@@ -287,6 +289,8 @@ function center_and_scale() {
         d.fx = scale * (d.fx - minx) + xshift;
         d.fy = scale * (d.fy - miny) + yshift;
     });
+
+    return {"scale": scale, "minx": minx, "miny": miny, "xshift": xshift, "yshift": yshift};
 }
 
 //Define all forces movements
