@@ -340,6 +340,7 @@ function KeyboardEventInit() {
             case 65:
                 //A for Add
                 //alert("y="+y+ "\nx="+x);
+                //for windows and linux user for prevent him to push node when his mouse is hover the menu
                 if (x >= 256 && y>30 && y<550  ) result = [AddNewNode(), "Add new node"];
                 break;
             case 67 :
