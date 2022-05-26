@@ -190,4 +190,16 @@ Faire un bouton("save") qui permet de fixer l'embedding (la possibilité de free
 - Renommage des boutons.
 - Merge des sommets.
     
-**Prochaine reunion :** ???
+#### 25/05/2022 - 13e rdv (dernier)
+*Nouvelles choses à faire (au moins essayer si on a du temps) :*
+- Corriger un bug: quand on change la taille de la fenêtre, les éléments selectionnés ne sont plus selectionnés, mais sont toujours rouges.
+- Ctrl+Z pour merge ou assurer que Ctrl+Z fonctionne bien pour les autres éléments après merge.
+- Mettre coloration et chromatic dans la section Hard Algorithmes.
+- Augmenter la taille du menu.
+- Enlever tous les logs du terminal avant la présentation finale.
+    
+*Travail fait :*
+- Bug de Ctrl+Z après redimensionnement du fenêtre corrigé (presque).
+- On est en train de rediger notre rapport.
+
+THE END
