@@ -13,6 +13,7 @@ var drag_in_progress = false;
 var is_frozen = false;
 var isDirected = false;
 var g6;
+var interfaceWidth, interfaceHeight;
 
 //DOM Elements / D3JS Elements
 var nodes, links, loops, v_labels, e_labels, l_labels, line, svg, brush, arrows;
@@ -388,12 +389,13 @@ function ManageAllGraphicsElements() {
         let oldSVG = document.getElementById("svg");
         oldSVG.parentElement.removeChild(oldSVG);
     }
-
+    interfaceWidth = window.innerWidth;
+    interfaceHeight = window.innerHeight * 1.3;
     // SVG window
     svg = d3.select("#graphFrame").append("svg")
         .attr("id", "svg")
-        .attr("width", width())
-        .attr("height", height())
+        .attr("width", interfaceWidth)
+        .attr("height", interfaceHeight)
         .attr("pointer-events", "all") // Zoom+move management
         .append('svg:g')
 
