@@ -97,6 +97,11 @@ class CommandManager {
         }
     }
 
+    ClearMemory() {
+        this.commandStack = [];
+        this.revertedCommandStack = [];
+    }
+
     ModifyPositionsOnResize(resizeParameters) {
         for (let command of this.commandStack) {
             this.ModifyPositions(resizeParameters, command);

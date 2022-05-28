@@ -99,6 +99,7 @@ function TreatResponse(response) {
             webSocket.close();
             break;
         case renewGraphParameter :
+            MyManager.ClearMemory();
             InitNewGraph(StringToObject(response.result));
             UpdateGraphProperties();
             break;
@@ -129,6 +130,7 @@ function TreatResponse(response) {
             afficherIsHamiltonian(response.result);
             break;
         case mergeVerticesParameter:
+          MyManager.ClearMemory();
           InitNewGraph(StringToObject(response.result));
           UpdateGraphProperties();
           CustomWarn("Nodes merged");

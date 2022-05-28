@@ -122,6 +122,7 @@ window.onresize = function () {
 function UpdateLayout() {
     if (force) force.stop();
     ManageAllGraphicsElements();
+    ResetSelection();
     force.restart();
 }
 
