@@ -114,7 +114,7 @@ def message_received(client, server, message):
 			CheckForUnsetPositions(targetGraph, newGraph, JSONmessage)
 			if JSONmessage.parameter == "switchLock":
 				response = handle_message(JSONmessage.parameter, None, None, client)
-			elif JSONmessage.parameter == "save":
+			elif JSONmessage.parameter == "save" or JSONmessage.parameter == "hasGraphChanged":
 				response = handle_message(JSONmessage.parameter, newGraph, targetGraph)
 			
 			elif JSONmessage.parameter == "mergeVertices" : 
@@ -125,7 +125,7 @@ def message_received(client, server, message):
 		if(JSONmessage.message != ""):
 			print(JSONmessage.message)
 
-		if client['lock'] or JSONmessage.parameter == "freezePositions" :
+		if JSONmessage.parameter != "hasGraphChanged" and (client['lock'] or JSONmessage.parameter == "freezePositions") :
 			update_graph(targetGraph, newGraph)
 
 		if response[1] != None :

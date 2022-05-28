@@ -137,28 +137,10 @@
             <div class="Panel">
                 <div>
                     <button class="hidingButton" onclick="develop(this)">></button>
-                    <p class="PanelHeader">Algorithms</p>
+                    <p class="PanelHeader">Orientations</p>
                 </div>
                 <div id="AlgorithmPanelContent" class="PanelContent">
                     <table>
-                        <tr>
-                            <td>
-                                <button onclick="RequestVertexColoring()">
-                                    Optimal proper vertex coloring
-                                </button>
-                            </td>
-                        </tr>
-                        <tr id="vertexColoring">
-                        </tr>
-                        <tr>
-                            <td>
-                                <button onclick="RequestEdgeColoring()">
-                                    Optimal proper edge coloring
-                                </button>
-                            </td>
-                        </tr>
-                        <tr id="edgeColoring">
-                        </tr>
                         <tr>
                             <td>
                                 <button onclick="RequestStrongOrientation()">Strong orientation</button>
@@ -182,6 +164,24 @@
                         </tr>
                         <tr>
                             <td>
+                                <button onclick="RequestVertexColoring()">
+                                    Optimal proper vertex coloring
+                                </button>
+                            </td>
+                        </tr>
+                        <tr id="vertexColoring">
+                        </tr>
+                        <tr>
+                            <td>
+                                <button onclick="RequestEdgeColoring()">
+                                    Optimal proper edge coloring
+                                </button>
+                            </td>
+                        </tr>
+                        <tr id="edgeColoring">
+                        </tr>
+                        <tr>
+                            <td>
                                 <button onclick="montrerChromaticNumber()">chromatic number</button>
                             </td>
                             <td id="chromaticNumber"></td>
@@ -202,7 +202,7 @@
             <div class="Panel">
                 <div>
                     <button class="hidingButton" onclick="develop(this)">></button>
-                    <p class="PanelHeader">Key Helper</p>
+                    <p class="PanelHeader">Key Commands</p>
                 </div>
                 <div id="KeyPanelContent" class="PanelContent">
                     <table>

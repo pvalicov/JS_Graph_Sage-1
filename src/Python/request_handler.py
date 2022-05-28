@@ -17,6 +17,7 @@ __switchLockParameter = "switchLock"
 __freezeGraphParameter = "freezePositions"
 __hamiltonianParameter = "hamiltonian"
 __mergeVerticesParameter = "mergeVertices"
+__graphChangeParameter = "hasGraphChanged"
 
 from json import JSONEncoder
 
@@ -167,7 +168,6 @@ def _generate_edge_coloring_for_JS(graph):
     coloration = []
     for colorationClass in edgeColoring:
         coloration.append(coloration_as_string_array(colorationClass))
-    print(coloration)
     return [__edgeColoringParameter, coloration], graph
 
 
@@ -283,7 +283,6 @@ def _switch_lock(client):
     else:
         s += "disabled"
 
-    print(s)
     response.append(s)
 
     return response
@@ -308,6 +307,9 @@ def casteTypeVertex(graph, verticesToMerge) :
                 verteciesToReturn.append(j)
     return verteciesToReturn
     
+def _checkIfGraphChanged(gnew, gold):
+    hasGraphChanged = bool(gold.get_vertices() != gnew.get_vertices() or not __compareGraphEdges(gold, gnew))
+    return [__graphChangeParameter, hasGraphChanged]
 
 
 JS_functions_dict = {__propertiesParameter: _get_graph_properties,
@@ -326,7 +328,8 @@ JS_functions_dict = {__propertiesParameter: _get_graph_properties,
                      __switchLockParameter: _switch_lock,
                      __freezeGraphParameter: _freezePositions,
                      __mergeVerticesParameter: _mergeVertices,
-                     __hamiltonianParameter:_get_IsHamiltonian}
+                     __hamiltonianParameter:_get_IsHamiltonian,
+                     __graphChangeParameter: _checkIfGraphChanged}
 
 # def create_show_global_tmp_graph(graph):
 # 	path_to_tmp_graph = SAGE_TMP+'/tmpJSgraph'

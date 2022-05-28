@@ -327,103 +327,109 @@ function TryAddNewGroup() {
 
 function KeyboardEventInit() {
 
-
+    document.onkeydown = function() {
+        CheckIfGraphChanged();
+    }
     //Keyboard Event
     document.onkeyup = function (key) {
-        var isOnDiv = false;
-
-        var result = null;
-        switch (key.keyCode) {
-            case 46:
-                result = [RemoveSelection(), "Delete selected Elements"];
-                break;
-            case 65:
-                //A for Add
-                //alert("y="+y+ "\nx="+x);
-                //for windows and linux user for prevent him to push node when his mouse is hover the menu
-                var screesizeH=window.screen.height;
-                var screensizeW=window.screen.width;
-                var isOnDivGraphSection = checkIfMouseOver();
-                if (x > 180 && y>30 &&  isOnDivGraphSection  && y<558) result = [AddNewNode(), "Add new node"];
-                break;
-            case 67 :
-                //C for color
-                SetGroupOfSelection();
-                break;
-            case 68:
-                //V for Divide nodes on selection
-                result = [SubdivideEdgeOnSelection(), "Subdivide selected edges"];
-                break;
-            case 69:
-                //E for Edges
-                result = [AddEdgesOnSelection(), "Add edge between selected nodes"];
-                break;
-            case 70:
-                //F for Freeze
-                FreezeGraph();
-                break;
-            case 73 :
-                //I for invert
-                result = [TryInvertEdge(), "Invert selected edges orientation"];
-                break;
-            case 76 :
-                //L for Loops
-                result = [AddLoopOnSelection(), "Add loop on selected nodes"];
-                break;
-            case 77 :
-                ///M for Merge Vertices
-                let selectedVertices = [];
-
-
-                for (let vertex of GetCurrentSelection()['nodes']) {
-                    let vertexname = vertex['data']['name'];
-                    selectedVertices.push(vertexname);
-                }
-
-                countKey[0] = 0;
-                countKey[1] = '';
-                mergeVertices(selectedVertices);
-
-
-                CustomWarn('Vertices merged');
-
-
-                break;
-            case 78 :
-                //N for Rename
-                result = [TryRenameElement(), "Relabel hovered element"];
-                break;
-            case 82:
-                //R to reset selection
-                ResetSelection();
-                break;
-            case 83:
-                //S for Save
-                SaveGraph();
-                break;
-            case 84:
-                //T for Test, to remove before build
-                LaunchAllTest();
-                break;
-            case 85:
-                //U for Unlock/lock auto save
-                switchLock();
-                break;
-            case 89:
-                //Y to redo
-                result = [MyManager.Redo(), "Redo previous reverted action"];
-                break;
-            case 90:
-                //Z to undo
-                result = [MyManager.Undo(), "Undo previous action"];
-                break;
-            default:
-                //Affiche le code de la touche pressée
-                console.log("Keycode : " + key.keyCode);
-                break;
+        if (hasGraphChanged) {
+            alert("You graph was changed in terminal. Please click 'Redraw Graph' or reload the page.");
         }
-        if (result) {
-            CheckUserAction(result);
+        else {
+            var isOnDiv = false;
+            var result = null;
+            switch (key.keyCode) {
+                case 46:
+                    result = [RemoveSelection(), "Delete selected Elements"];
+                    break;
+                case 65:
+                    //A for Add
+                    //alert("y="+y+ "\nx="+x);
+                    //for windows and linux user for prevent him to push node when his mouse is hover the menu
+                    var screesizeH=window.screen.height;
+                    var screensizeW=window.screen.width;
+                    var isOnDivGraphSection = checkIfMouseOver();
+                    if (x > 180 && y>30 &&  isOnDivGraphSection  && y<558) result = [AddNewNode(), "Add new node"];
+                    break;
+                case 67 :
+                    //C for color
+                    SetGroupOfSelection();
+                    break;
+                case 68:
+                    //V for Divide nodes on selection
+                    result = [SubdivideEdgeOnSelection(), "Subdivide selected edges"];
+                    break;
+                case 69:
+                    //E for Edges
+                    result = [AddEdgesOnSelection(), "Add edge between selected nodes"];
+                    break;
+                case 70:
+                    //F for Freeze
+                    FreezeGraph();
+                    break;
+                case 73 :
+                    //I for invert
+                    result = [TryInvertEdge(), "Invert selected edges orientation"];
+                    break;
+                case 76 :
+                    //L for Loops
+                    result = [AddLoopOnSelection(), "Add loop on selected nodes"];
+                    break;
+                case 77 :
+                    ///M for Merge Vertices
+                    let selectedVertices = [];
+
+
+                    for (let vertex of GetCurrentSelection()['nodes']) {
+                        let vertexname = vertex['data']['name'];
+                        selectedVertices.push(vertexname);
+                    }
+
+                    countKey[0] = 0;
+                    countKey[1] = '';
+                    mergeVertices(selectedVertices);
+
+
+                    CustomWarn('Vertices merged');
+
+
+                    break;
+                case 78 :
+                    //N for Rename
+                    result = [TryRenameElement(), "Relabel hovered element"];
+                    break;
+                case 82:
+                    //R to reset selection
+                    ResetSelection();
+                    break;
+                case 83:
+                    //S for Save
+                    SaveGraph();
+                    break;
+                case 84:
+                    //T for Test, to remove before build
+                    LaunchAllTest();
+                    break;
+                case 85:
+                    //U for Unlock/lock auto save
+                    switchLock();
+                    break;
+                case 89:
+                    //Y to redo
+                    result = [MyManager.Redo(), "Redo previous reverted action"];
+                    break;
+                case 90:
+                    //Z to undo
+                    result = [MyManager.Undo(), "Undo previous action"];
+                    break;
+                default:
+                    //Affiche le code de la touche pressée
+                    console.log("Keycode : " + key.keyCode);
+                    break;
+            }
+            if (result) {
+                CheckUserAction(result);
+            }
         }
     }
 }

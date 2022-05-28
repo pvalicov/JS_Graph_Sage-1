@@ -1,4 +1,5 @@
 var webSocket;
+var hasGraphChanged = false;
 
 const propertiesRequestParameter = "Properties";
 const strongOrientationRequestParameter = "strongOrientation";
@@ -19,6 +20,7 @@ const switchLockParameter = "switchLock"
 const freezeGraphCoordinates = "freezePositions";
 const hamiltonianParameter= "hamiltonian";
 const mergeVerticesParameter = "mergeVertices";
+const graphChangeParameter = "hasGraphChanged";
 
 
 function InitWebSocketConnection() {
@@ -102,6 +104,7 @@ function TreatResponse(response) {
             MyManager.ClearMemory();
             InitNewGraph(StringToObject(response.result));
             UpdateGraphProperties();
+            hasGraphChanged = false;
             break;
         case girthParameter :
             afficherResultGirth(response.result);
@@ -130,12 +133,14 @@ function TreatResponse(response) {
             afficherIsHamiltonian(response.result);
             break;
         case mergeVerticesParameter:
-          MyManager.ClearMemory();
-          InitNewGraph(StringToObject(response.result));
-          UpdateGraphProperties();
-          CustomWarn("Nodes merged");
-
-              break; 
+            MyManager.ClearMemory();
+            InitNewGraph(StringToObject(response.result));
+            UpdateGraphProperties();
+            CustomWarn("Nodes merged");
+            break;
+        case graphChangeParameter:
+            hasGraphChanged = response.result;
+            break;
         default:
             CustomWarn("Undefined response behavior for parameter :" + response.request);
             break;
@@ -143,6 +148,9 @@ function TreatResponse(response) {
     }
 }
 
+function CheckIfGraphChanged() {
+    SubmitMessage(graphChangeParameter);
+}
 
 function UpdateGraphProperties(message = ""){
     SubmitMessage(propertiesRequestParameter,message = message);

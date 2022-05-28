@@ -151,8 +151,11 @@ def graph_to_JSON(G,
         gravity = 0
         
         for v in G:
+          if v in Gpos.keys():
             x, y = Gpos[v]
-            pos.append([float(x), float(-y)])
+          else:
+            x = y = 0
+          pos.append([float(x), float(-y)])
             
     # Encodes the data as a JSON string
     from json import JSONEncoder
