@@ -83,11 +83,11 @@ window.onload = function () {
 
     document.addEventListener('mousemove', onMouseUpdate, false);
     document.addEventListener('mouseenter', onMouseUpdate, false);
+
 }
 function onMouseUpdate(e) {
   x = e.pageX;
   y = e.pageY;
-  console.log(x, y);
 }
 
 function getMouseX() {
@@ -1508,7 +1508,7 @@ var isMouseOver =true;
     b.onmouseout=function(){
         isMouseOver=false;
     }
-    console.log(isMouseOver);
+
     return isMouseOver;
 
 }
