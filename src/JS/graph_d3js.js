@@ -83,6 +83,7 @@ window.onload = function () {
 
     document.addEventListener('mousemove', onMouseUpdate, false);
     document.addEventListener('mouseenter', onMouseUpdate, false);
+
 }
 function onMouseUpdate(e) {
   x = e.pageX;

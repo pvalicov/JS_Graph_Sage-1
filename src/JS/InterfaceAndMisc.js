@@ -346,8 +346,7 @@ function KeyboardEventInit() {
                     //A for Add
                     //alert("y="+y+ "\nx="+x);
                     //for windows and linux user for prevent him to push node when his mouse is hover the menu
-                    var screesizeH=window.screen.height;
-                    var screensizeW=window.screen.width;
+                    console.log(y)
                     var isOnDivGraphSection = checkIfMouseOver();
                     if (x > overlayElements.propertyPanelContent.clientWidth && y>30 &&  isOnDivGraphSection  && y<558) result = [AddNewNode(), "Add new node"];
                     break;

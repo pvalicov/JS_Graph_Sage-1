@@ -236,3 +236,5 @@ function mergeVertices(verticesToMerge){
 
 
 
+
+
