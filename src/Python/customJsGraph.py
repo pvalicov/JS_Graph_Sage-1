@@ -141,6 +141,10 @@ def graph_to_JSON(G,
       Gpos = G.graphplot(layout=layout)._pos
     elif G.get_pos():
       Gpos = G.get_pos()
+      if len(Gpos) < len(G.vertices()):
+        for v in G:
+          if v not in Gpos.keys():
+            Gpos[v] = (0, 0)
     else :
       Gpos = G.graphplot(layout='spring')._pos
     pos = []
@@ -151,11 +155,8 @@ def graph_to_JSON(G,
         gravity = 0
         
         for v in G:
-          if v in Gpos.keys():
             x, y = Gpos[v]
-          else:
-            x = y = 0
-          pos.append([float(x), float(-y)])
+            pos.append([float(x), float(-y)])
             
     # Encodes the data as a JSON string
     from json import JSONEncoder
@@ -179,8 +180,6 @@ def CheckForUnsetPositions(targetGraph, newGraph, newGraphJSON):
     posdict = {}
     for n in newGraphJSON.nodes:
         posdict[original_nodes[n.get("name")]] = (n.get("x"),n.get("y"))
-    print("setting nodes pos")
-    print(posdict)
     newGraph.set_pos(posdict)
 
 import re, webbrowser, time

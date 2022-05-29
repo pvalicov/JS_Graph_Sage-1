@@ -349,7 +349,7 @@ function KeyboardEventInit() {
                     var screesizeH=window.screen.height;
                     var screensizeW=window.screen.width;
                     var isOnDivGraphSection = checkIfMouseOver();
-                    if (x > 180 && y>30 &&  isOnDivGraphSection  && y<558) result = [AddNewNode(), "Add new node"];
+                    if (x > overlayElements.propertyPanelContent.clientWidth && y>30 &&  isOnDivGraphSection  && y<558) result = [AddNewNode(), "Add new node"];
                     break;
                 case 67 :
                     //C for color
