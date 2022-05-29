@@ -75,7 +75,6 @@ function TreatResponse(response) {
             );
             break;
         case showSpanTreeParameter :
-            console.info(response.result);
             if (showSpanTree && Object.keys(response.result).length != 0)
                 SetLinksColoration(new Array(response.result), 1);
             break;

@@ -115,7 +115,6 @@ class CommandManager {
     ModifyPositions(param, command) {
         if (command.value.hasOwnProperty('fx') && !graphJSON.nodes.includes(command.value)) {
             let node = command.value;
-            console.log(node);
             node.fx = param.scale * (node.fx - param.minx) + param.xshift;
             node.fy = param.scale * (node.fy - param.miny) + param.yshift;
         }
