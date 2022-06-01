@@ -165,6 +165,7 @@ def graph_to_JSON(G,
                                    "loops": loops,
                                    "pos": pos,
                                    "directed": G.is_directed(),
+                                   "multiple_edges": multiple_edges,
                                    "charge": int(charge),
                                    "link_distance": int(link_distance),
                                    "link_strength": int(link_strength),
@@ -215,9 +216,15 @@ def ConstructGraphFromJSONObject(JSONObject):
   G = None
 
   if JSONObject.directed :
-    G = DiGraph()
+    if JSONObject.multiple_edges:
+      G = DiGraph(multiedges=True)
+    else:
+      G = DiGraph()
   else :
-    G = Graph()
+    if JSONObject.multiple_edges:
+      G = Graph(multiedges=True)
+    else:
+      G = Graph()
 
   #Add nodes
   for node in JSONObject.nodes:

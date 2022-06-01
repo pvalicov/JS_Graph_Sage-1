@@ -59,8 +59,14 @@ def _get_graph_properties(graph):
     response[1].append(graph.is_eulerian())
     response[1].append(_generate_graph6_formula(graph))
     response[1].append(result)
-    response[1].append(int(graph.edge_connectivity()))
-    response[1].append(graph.is_hamiltonian())
+    if graph.has_multiple_edges():
+        response[1].append("-")
+    else:
+        response[1].append(int(graph.edge_connectivity()))
+    if graph.has_multiple_edges():
+        response[1].append("-")
+    else:
+        response[1].append(graph.is_hamiltonian())
     response[1].append(int(graph.vertex_connectivity()))
     return response, graph
 
@@ -158,6 +164,7 @@ def _generate_vertex_coloring_for_JS(graph):
         for c in col:
             colorationClass.append(str(c))
         coloration.append(colorationClass)
+    print(coloration)
 
     return [__vertexColoringParameter, coloration], graph
 
@@ -212,7 +219,7 @@ def _get_new_graph_in_JSON_for_JS(graph):
 
 
 def _generate_graph6_formula(graph):
-    if (graph.has_loops()):
+    if (graph.has_loops() or graph.has_multiple_edges()):
         response = "None"
         print("G6 can be applied on simple graph only")
     else:

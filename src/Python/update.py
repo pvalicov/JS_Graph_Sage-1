@@ -38,11 +38,11 @@ def __update_graph_edges(gold, gnew, print_update = True):
 
 	if not __compareGraphEdges(gold, gnew):
 		did_smth = "Updated edges"
-		edges_old = gold.edges()
-		edges_new = gnew.edges()
+		edges_old = list(gold.edges())
+		edges_new = list(gnew.edges())
 
 		for currentEdge in edges_old:
-			if currentEdge not in edges_new:
+			if currentEdge not in edges_new or edges_new.count(currentEdge) < list(gold.edges()).count(currentEdge):
 				gold.delete_edge(currentEdge[0], currentEdge[1])
 				print("Edge (" + str(currentEdge[0]) + ", " + str(currentEdge[1]) + ") deleted")
 
@@ -50,7 +50,7 @@ def __update_graph_edges(gold, gnew, print_update = True):
 			gold.allow_loops(True)
 
 		for currentEdge in edges_new :
-			if currentEdge not in edges_old :
+			if currentEdge not in edges_old or list(gold.edges()).count(currentEdge) < edges_new.count(currentEdge):
 				gold.add_edge(currentEdge[0], currentEdge[1])
 				print("Edge (" + str(currentEdge[0]) + ", " + str(currentEdge[1]) + ") added")
 
